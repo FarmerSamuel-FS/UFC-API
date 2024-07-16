@@ -21,7 +21,7 @@ db.once("open", () => console.log("Database Connection Established"));
 
 app.use(express.json());
 
-app.use("/fighters", fighterRouter);
+app.use("/api/v1/fighters", fighterRouter);
 
 //look in the react build folder for static build
 app.use(express.static(path.join(__dirname, "../reactjs/build")));
