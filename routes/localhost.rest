@@ -1,0 +1,42 @@
+GET http://localhost:8000/fighters
+
+###
+
+GET http://localhost:8000/fighters/669690ed30dd24379bb3506e
+
+###
+
+POST http://localhost:8000/fighters
+Content-Type: application/json
+
+{
+  "name": "Sean O'Malley",
+  "age": 29,
+  "record": {
+    "wins": 16,
+    "losses": 1
+  },
+  "region": "Arizona, USA",
+  "league": "UFC"
+}
+
+###
+
+PATCH http://localhost:8000/fighters/6696b9bb34b69a7c0552974f
+Content-Type: application/json
+
+{
+  "name": "Sean O'Malley",
+  "age": 29,
+  "record": {
+    "wins": 18,
+    "losses": 1
+  },
+  "region": "Arizona, USA",
+  "league": "UFC"
+}
+
+###
+
+
+DELETE http://localhost:8000/fighters/6696947965a7d211e5f25285
