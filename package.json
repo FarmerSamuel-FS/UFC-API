@@ -5,9 +5,9 @@
     "node": "18.20.2"
   },
   "scripts": {
-    "install-ufc-react": "npm install --prefix ufc-react",
+    "install-ufc-react": "npm install --prefix react",
     "install-api": "npm install --prefix api",
-    "build-ufc-react": "npm run build --prefix ufc-react",
+    "build-ufc-react": "npm run build --prefix react",
     "heroku-postbuild": "concurrently \"npm run install-react\" \"npm run build-react\"",
     "start": "npm start --prefix api",
     "dev:react": "concurrently --raw \"npm run api\" \"npm run react\"",
