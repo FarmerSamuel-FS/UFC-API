@@ -1,11 +1,8 @@
-
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Fighter from "./pages/Fighter";
 import Dashboard from "./pages/Dashboard";
-import "./App.css";
-import React, { useEffect, useState } from "react";
 
 function App() {
   const [fighters, setFighters] = useState(null);
@@ -45,7 +42,6 @@ function App() {
     return () => {
       ignore = true;
     };
-
   }, [API_BASE]);
 
   return (
@@ -56,36 +52,8 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </Router>
-
-  }, []);
-
-  const getFighters = async () => {
-    setLoading(true);
-    try {
-      await fetch(`${API_BASE}/fighters`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log({ data });
-          setFighters(data);
-        });
-    } catch (error) {
-      setError(error.message || "Unexpected Error");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Fighters</h1>
-        <ul>
-          <li>Fighters</li>
-        </ul>
-      </header>
-    </div>
-
   );
 }
 
 export default App;
+
