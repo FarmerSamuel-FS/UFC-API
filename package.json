@@ -1,0 +1,20 @@
+{
+  "name": "ufc-api",
+  "version": "1.0.0",
+  "engines": {
+    "node": "18.20.2"
+  },
+  "scripts": {
+    "install-reactjs": "npm install --prefix reactjs",
+    "install-api": "npm install --prefix api",
+    "build-reactjs": "npm run build --prefix reactjs",
+    "heroku-postbuild": "concurrently \"npm:install-*\"; concurrently \"npm:build-*\"; ",
+    "start": "npm start --prefix api",
+    "dev:react": "concurrently --raw \"npm run api\" \"npm run react\"",
+    "react": "cd reactjs && npm run start",
+    "api": "cd api; nodemon server.js"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
