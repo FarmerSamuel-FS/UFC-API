@@ -1,7 +1,11 @@
-import "./App.css";
-import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import Fighter from "./pages/Fighter";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
+<<<<<<< HEAD:ufc-react/src/App.js
+=======
   const [fighters, setFighters] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -37,15 +41,15 @@ function App() {
     }
   };
 
+>>>>>>> main:reactjs/src/App.js
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Fighters</h1>
-        <ul>
-          <li>Fighters</li>
-        </ul>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" exact element={<Home />} />
+        <Route path="/fighters/:id" exact element={<Fighter />} />
+        <Route path="/dashboard" exact element={<Dashboard />} />
+      </Routes>
+    </Router>
   );
 }
 
