@@ -7,7 +7,7 @@
   "scripts": {
     "install-reactjs": "npm install --prefix reactjs",
     "install-api": "npm install --prefix api",
-    "build-ufc-react": "npm run build --prefix reactjs",
+    "build-reactjs": "npm run build --prefix reactjs",
     "heroku-postbuild": "npm run install-api && npm run install-reactjs && npm run build-reactjs",
     "start": "npm start --prefix api",
     "dev:react": "concurrently --raw \"npm run api\" \"npm run react\"",
