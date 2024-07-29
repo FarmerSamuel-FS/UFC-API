@@ -1,4 +1,10 @@
 const express = require("express");
+const passport = require("passport");
+
+const passportService = require("../services/passport.js");
+
+const protectedRoute = passport.authenticate("jwt", { session: false });
+
 const router = express.Router();
 
 const Fighter = require("../models/fighters");
@@ -18,7 +24,7 @@ const getFighter = async (req, res, next) => {
 };
 
 //GET ALL
-router.get("/", async (req, res) => {
+router.get("/", protectedRoute, async (req, res) => {
   try {
     const fighters = await Fighter.find();
     res.json(fighters);
