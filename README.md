@@ -26,8 +26,8 @@ Set up environment variables:
 
 Create a .env file in the root directory.
 Add the following variables:
-PORT=8000
-MONGODB_URI=mongodb://localhost:27017/ufc
+DATABASE_URL="mongodb://localhost/fighters"
+
 
 Start the server:
 npm start
