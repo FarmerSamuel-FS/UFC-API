@@ -1,5 +1,3 @@
-
-
 # UFC API
 
 This project implements a RESTful API for managing UFC fighters.
@@ -19,20 +17,22 @@ To run this project locally, follow these steps:
    ```bash
    git clone https://github.com/FarmerSamuel-FS/UFC-API.git
    cd UFC-API
-Install dependencies:
+   Install dependencies:
+   ```
 
-npm install
+npm install in each api, and reactjs as well as
+npm install express mongoose path cors nodemon dotenv
 Set up environment variables:
 
 Create a .env file in the root directory.
 Add the following variables:
+
 DATABASE_URL="mongodb://localhost/fighters"
 
-
 Start the server:
-npm start
-Open your browser and navigate to http://localhost:8000.
-
+main file dir UFC-API
+npm run dev:react
+Open your browser and navigate to http://localhost:3000
 API Endpoints
 
 GET /api/v1/fighters: Get all fighters.
