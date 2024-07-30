@@ -16,14 +16,15 @@ const signup = (email, password, firstName, lastName, age, country) => {
   });
 };
 
-const login = (username, password) => {
+const login = (email, password) => {
   return axios
     .post(API_URL + "signin", {
-      username,
+      email,
       password,
     })
     .then((response) => {
-      if (response.data.accessToken) {
+      if (response.data.token) {
+        // Update to check for `token`
         localStorage.setItem("user", JSON.stringify(response.data));
       }
       return response.data;

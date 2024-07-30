@@ -43,7 +43,7 @@ function App() {
           <Route
             path="/fighters/:id"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute user={currentUser}>
                 <Fighter />
               </ProtectedRoute>
             }
@@ -51,7 +51,7 @@ function App() {
           <Route
             path="/dashboard"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute user={currentUser}>
                 <Dashboard setCurrentUser={setCurrentUser} />
               </ProtectedRoute>
             }

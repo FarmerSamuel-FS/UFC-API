@@ -1,7 +1,7 @@
 import React from "react";
 import AuthService from "../services/AuthServices";
 
-function LogoutButton({ setCurrentUser }) {
+const LogoutButton = ({ setCurrentUser }) => {
   const handleLogout = () => {
     AuthService.logout();
     setCurrentUser(null);
@@ -10,11 +10,11 @@ function LogoutButton({ setCurrentUser }) {
   return (
     <button
       onClick={handleLogout}
-      className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-md ml-4"
+      className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-md"
     >
       Logout
     </button>
   );
-}
+};
 
 export default LogoutButton;
