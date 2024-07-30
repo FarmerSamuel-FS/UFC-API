@@ -38,7 +38,7 @@ router.get("/:id", getFighter, async (req, res) => {
 });
 
 //POST CREATE
-router.post("/", async (req, res) => {
+router.post("/", protectedRoute, async (req, res) => {
   const fighter = new Fighter({
     name: req.body.name,
     age: req.body.age,
@@ -54,7 +54,7 @@ router.post("/", async (req, res) => {
   }
 });
 // PATCH UPDATE
-router.patch("/:id", getFighter, async (req, res) => {
+router.patch("/:id", getFighter, protectedRoute, async (req, res) => {
   if (req.body.name != null) {
     res.fighter.name = req.body.name;
   }
@@ -83,7 +83,7 @@ router.patch("/:id", getFighter, async (req, res) => {
 });
 
 //DELETE
-router.delete("/:id", getFighter, async (req, res) => {
+router.delete("/:id", getFighter, protectedRoute, async (req, res) => {
   try {
     await res.fighter.deleteOne();
     res.json({ message: "Fighter Removed" });

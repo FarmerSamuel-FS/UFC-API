@@ -1,7 +1,7 @@
 const passport = require("passport");
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const JwtStrategy = require("passport-jwt").Strategy;
-const LocalStrategy = require("passport-local").Strategy; // Corrected import
+const LocalStrategy = require("passport-local").Strategy;
 const User = require("../models/users.js");
 const config = require("../config_secret.js");
 
@@ -19,14 +19,14 @@ const localStrategy = new LocalStrategy(localOptions, async function (
   try {
     const user = await User.findOne({ email: email });
     if (!user) {
-      return done(null, false);
+      return done(null, false, { message: "Incorrect email." });
     }
     user.comparePassword(password, function (error, isMatch) {
       if (error) {
         return done(error);
       }
       if (!isMatch) {
-        return done(null, false);
+        return done(null, false, { message: "Incorrect password." });
       }
       return done(null, user);
     });
@@ -38,7 +38,7 @@ const localStrategy = new LocalStrategy(localOptions, async function (
 // JWT strategy options
 const jwtOptions = {
   secretOrKey: config.secret,
-  jwtFromRequest: ExtractJwt.fromHeader("authorization"),
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 };
 
 // JWT strategy

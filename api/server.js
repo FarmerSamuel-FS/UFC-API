@@ -6,34 +6,43 @@ const cors = require("cors");
 
 const app = express();
 
+// Enable CORS
 app.use(cors());
 
 const PORT = process.env.PORT || 8000;
 
+// Import routes
 const fighterRouter = require("./routes/fighters");
 const authRouter = require("./routes/auth");
 
+// Database URL from environment variables
 const DATABASE_URL = process.env.DATABASE_URL;
 
-mongoose.connect(DATABASE_URL, { useNewUrlParser: true });
+// Connect to MongoDB
+mongoose.connect(DATABASE_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Database Connection Established"));
 
+// Middleware to parse JSON requests
 app.use(express.json());
 
+// Define API routes
 app.use("/api/v1/fighters", fighterRouter);
 app.use("/api/v1/auth", authRouter);
 
-//look in the react build folder for static build
+// Serve static files from the React app's build directory
 app.use(express.static(path.join(__dirname, "../reactjs/build")));
 
-//for any routes not defined by the api, assume it's a direct
-//request to a client-side route
+// Handle any other routes by serving the React app's index.html
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "../reactjs/build", "index.html"));
 });
 
+// Start the server
 app.listen(PORT, () => {
-  console.log(`Server running on ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

@@ -16,6 +16,22 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
   },
+  firstName: {
+    type: String,
+    required: "First name is required",
+  },
+  lastName: {
+    type: String,
+    required: "Last name is required",
+  },
+  age: {
+    type: Number,
+    required: "Age is required",
+  },
+  country: {
+    type: String,
+    required: "Country is required",
+  },
   created_at: {
     type: Date,
     required: true,
@@ -25,7 +41,7 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.pre("save", function (next) {
   const user = this;
-  if (user.isNew || user.usModified("password")) {
+  if (user.isNew || user.isModified("password")) {
     bcrypt.genSalt(10, (error, salt) => {
       if (error) {
         return next(error);
@@ -52,6 +68,6 @@ UserSchema.methods.comparePassword = function (candidatePassword, callback) {
   });
 };
 
-const User = mongoose.model("Users", UserSchema);
+const User = mongoose.model("User", UserSchema);
 
 module.exports = User;

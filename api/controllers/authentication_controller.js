@@ -7,7 +7,7 @@ const tokenForUser = (user) => {
   return jwt.encode(
     {
       sub: user.id,
-      iat: timestamp, // Corrected from 'int' to 'iat' (issued at time)
+      iat: timestamp,
     },
     config.secret,
   );
@@ -15,15 +15,19 @@ const tokenForUser = (user) => {
 
 exports.signin = (req, res, next) => {
   const user = req.user;
+  if (!user) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+  console.log("User logged in:", user);
   res.send({ token: tokenForUser(user), user_id: user._id });
 };
 
 exports.signup = async (req, res, next) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
+  const { email, password, firstName, lastName, age, country } = req.body;
+  if (!email || !password || !firstName || !lastName || !age || !country) {
     return res
       .status(422)
-      .json({ error: "Please provide your email and password" });
+      .json({ error: "Please provide all required fields" });
   }
 
   try {
@@ -32,11 +36,20 @@ exports.signup = async (req, res, next) => {
       return res.status(422).json({ error: "Email already in use" });
     }
 
-    const user = new User({ email: email, password: password });
+    const user = new User({
+      email,
+      password,
+      firstName,
+      lastName,
+      age,
+      country,
+    });
     await user.save();
 
+    console.log("User signed up:", user);
     res.json({ user_id: user._id, token: tokenForUser(user) });
   } catch (error) {
+    console.error("Error during signup:", error);
     return next(error);
   }
 };
