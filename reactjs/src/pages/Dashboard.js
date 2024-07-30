@@ -1,8 +1,9 @@
 import "../App.css";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import AuthService from "../services/AuthServices";
 
-function Dashboard() {
+function Dashboard({ setCurrentUser }) {
   const [fighters, setFighters] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -21,25 +22,26 @@ function Dashboard() {
       ? `http://localhost:8000/api/v1`
       : process.env.REACT_APP_BASE_URL;
 
-  let ignore = false;
+  const currentUser = AuthService.getCurrentUser();
+
   useEffect(() => {
-    if (!ignore) {
-      getFighters();
-    }
-    return () => {
-      ignore = true;
-    };
+    getFighters();
   }, []);
 
   const getFighters = async () => {
     setLoading(true);
+    const token = currentUser?.token;
     try {
-      await fetch(`${API_BASE}/fighters`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log({ data });
-          setFighters(data);
-        });
+      const response = await fetch(`${API_BASE}/fighters`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch fighters");
+      }
+      const data = await response.json();
+      setFighters(data);
     } catch (error) {
       setError(error.message || "Unexpected Error");
     } finally {
@@ -55,11 +57,13 @@ function Dashboard() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setCreating(true);
+    const token = currentUser?.token;
     try {
       await fetch(`${API_BASE}/fighters`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           ...newFighter,
@@ -88,12 +92,6 @@ function Dashboard() {
   return (
     <div className="App">
       <header className="App-header">
-        <Link
-          to="/"
-          className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md mb-4 inline-block"
-        >
-          Home
-        </Link>
         <h1 className="text-5xl font-bold">Fighters Dashboard</h1>
         <h3 className="text-3xl font-semibold mt-4">Fighters:</h3>
         <ul>

@@ -30,8 +30,16 @@ function Fighter() {
 
   const getFighter = async () => {
     setLoading(true);
+    const token = localStorage.getItem("token");
     try {
-      const response = await fetch(`${API_BASE}/fighters/${id}`);
+      const response = await fetch(`${API_BASE}/fighters/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch fighter");
+      }
       const data = await response.json();
       console.log({ data });
       setFighter(data);
@@ -43,9 +51,14 @@ function Fighter() {
   };
 
   const deleteFighter = async () => {
+    setLoading(true);
+    const token = localStorage.getItem("token");
     try {
       await fetch(`${API_BASE}/fighters/${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       navigate("/dashboard", { replace: true });
     } catch (error) {
@@ -56,14 +69,18 @@ function Fighter() {
   };
 
   const updateFighter = async () => {
+    setLoading(true);
+    const token = localStorage.getItem("token");
     try {
       await fetch(`${API_BASE}/fighters/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(fighter),
       });
+      navigate("/dashboard", { replace: true });
     } catch (error) {
       setError(error.message || "Unexpected Error");
     } finally {

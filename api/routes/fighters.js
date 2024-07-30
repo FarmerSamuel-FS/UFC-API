@@ -1,4 +1,10 @@
 const express = require("express");
+const passport = require("passport");
+
+const passportService = require("../services/passport.js");
+
+const protectedRoute = passport.authenticate("jwt", { session: false });
+
 const router = express.Router();
 
 const Fighter = require("../models/fighters");
@@ -18,7 +24,7 @@ const getFighter = async (req, res, next) => {
 };
 
 //GET ALL
-router.get("/", async (req, res) => {
+router.get("/", protectedRoute, async (req, res) => {
   try {
     const fighters = await Fighter.find();
     res.json(fighters);
@@ -32,7 +38,7 @@ router.get("/:id", getFighter, async (req, res) => {
 });
 
 //POST CREATE
-router.post("/", async (req, res) => {
+router.post("/", protectedRoute, async (req, res) => {
   const fighter = new Fighter({
     name: req.body.name,
     age: req.body.age,
@@ -48,7 +54,7 @@ router.post("/", async (req, res) => {
   }
 });
 // PATCH UPDATE
-router.patch("/:id", getFighter, async (req, res) => {
+router.patch("/:id", getFighter, protectedRoute, async (req, res) => {
   if (req.body.name != null) {
     res.fighter.name = req.body.name;
   }
@@ -77,7 +83,7 @@ router.patch("/:id", getFighter, async (req, res) => {
 });
 
 //DELETE
-router.delete("/:id", getFighter, async (req, res) => {
+router.delete("/:id", getFighter, protectedRoute, async (req, res) => {
   try {
     await res.fighter.deleteOne();
     res.json({ message: "Fighter Removed" });

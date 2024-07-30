@@ -36,3 +36,27 @@
     transform: rotate(360deg);
   }
 }
+
+/* Tailwind CSS classes can be applied directly in JSX */
+.form-input {
+  @apply block w-full p-2 mb-4 border border-gray-300 rounded;
+}
+
+.App-header {
+  @apply flex flex-col items-center p-4;
+}
+
+.text-red-500 {
+  @apply text-red-500;
+}
+
+.text-green-500 {
+  @apply text-green-500;
+}
+/* Tailwind CSS included via CDN or build process */
+@import "https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css";
+
+/* Custom Styles */
+body {
+  font-family: "Inter", sans-serif;
+}
