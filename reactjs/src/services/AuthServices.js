@@ -1,12 +1,18 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8000/api/v1/auth/";
+const API_URL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:8000/api/v1/auth/"
+    : process.env.REACT_APP_BASE_URL + "/auth/";
 
-const register = (username, email, password) => {
+const signup = (email, password, firstName, lastName, age, country) => {
   return axios.post(API_URL + "signup", {
-    username,
     email,
     password,
+    firstName,
+    lastName,
+    age,
+    country,
   });
 };
 
@@ -20,7 +26,6 @@ const login = (username, password) => {
       if (response.data.accessToken) {
         localStorage.setItem("user", JSON.stringify(response.data));
       }
-
       return response.data;
     });
 };
@@ -34,7 +39,7 @@ const getCurrentUser = () => {
 };
 
 const AuthService = {
-  register,
+  signup,
   login,
   logout,
   getCurrentUser,
