@@ -18,7 +18,10 @@ function Login({ setCurrentUser }) {
     try {
       const response = await AuthService.login(email, password);
 
+      console.log("Server response:", response);
+
       if (response.token) {
+        // Update to check for `token`
         setMessage("Login successful!");
         setCurrentUser(response);
         navigate("/dashboard");
@@ -26,6 +29,7 @@ function Login({ setCurrentUser }) {
         setError("Login failed. Please try again.");
       }
     } catch (err) {
+      console.error("Error during login:", err);
       setError("An error occurred. Please try again.");
     }
   };
